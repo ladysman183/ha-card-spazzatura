@@ -1,0 +1,193 @@
+type: custom:button-card
+entity: sensor.spazzatura_domani
+show_name: false
+show_icon: false
+styles:
+  card:
+    - background-color: '#1a1a1a'
+    - border: none
+    - box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
+    - border-radius: 16px
+    - padding: 14px
+  grid:
+    - grid-template-areas: '"header" "sub1" "main" "sub2" "scadenze" "image" "notifiche" "status"'
+    - grid-template-columns: 1fr
+    - grid-gap: 8px
+custom_fields:
+  header: |
+    [[[
+      return `<div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <ha-icon icon="mdi:recycle" style="color: #2ecc71; --mdc-icon-size: 24px;"></ha-icon>
+          <span style="font-size: 18px; font-weight: bold; color: #FFFFFF;">Raccolta Rifiuti</span>
+        </div>
+        <div style="
+          background: rgba(46, 204, 113, 0.15);
+          border: 1px solid #2ecc71;
+          border-radius: 10px;
+          padding: 4px 8px;
+          font-size: 10px;
+          color: #2ecc71;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        ">
+          <span>🔒</span> Automazione Attiva
+        </div>
+      </div>`;
+    ]]]
+  sub1: |
+    [[[
+      return `<div style="font-size: 14px; font-weight: 500; color: #AAAAAA; text-align: left;">Spazzatura Domani</div>`;
+    ]]]
+  main: |
+    [[[
+      let stato = states['sensor.spazzatura_domani'] ? states['sensor.spazzatura_domani'].state.toLowerCase() : 'nessuno';
+      let colore = '#FFD54F';
+      let icona = 'mdi:delete-empty-outline';
+      if (stato.includes('carta')) { colore = '#FFD54F'; icona = 'mdi:package-variant'; }
+      else if (stato.includes('plastica')) { colore = '#00F0FF'; icona = 'mdi:bottle-soda-outline'; }
+      else if (stato.includes('vetro')) { colore = '#2979FF'; icona = 'mdi:cup'; }
+      else if (stato.includes('secco') || stato.includes('indifferenziato')) { colore = '#B0BEC5'; icona = 'mdi:delete'; }
+      else if (stato.includes('umido') || stato.includes('organico') || stato.includes('verde')) { colore = '#A1887F'; icona = 'mdi:delete-outline'; }
+      
+      let statoText = states['sensor.spazzatura_domani'] ? states['sensor.spazzatura_domani'].state : 'Nessuno';
+
+      return `<div style="
+        background-color: rgba(255, 255, 255, 0.04);
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+      ">
+        <div style="
+          border: 2px solid ${colore};
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 6px ${colore}40;
+          flex-shrink: 0;
+        ">
+          <ha-icon icon="${icona}" style="color: ${colore}; --mdc-icon-size: 26px;"></ha-icon>
+        </div>
+        <div style="text-align: left; margin-left: 12px;">
+          <div style="color: ${colore}; font-size: 17px; font-weight: 900; line-height: 1.1; letter-spacing: 0.5px;">${statoText.toUpperCase()}</div>
+          <div style="color: #FFFFFF; font-size: 13px; margin-top: 2px;">Domani</div>
+        </div>
+      </div>`;
+    ]]]
+  sub2: |
+    [[[
+      return `<div style="font-size: 14px; font-weight: 500; color: #AAAAAA; text-align: left; margin-top: 4px;">Prossime Scadenze</div>`;
+    ]]]
+  scadenze: |
+    [[[
+      return `<div style="display: flex; gap: 8px;">
+        <div style="
+          flex: 1;
+          background-color: rgba(255, 255, 255, 0.04);
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          padding: 8px 10px;
+          display: flex;
+          align-items: center;
+        ">
+          <div style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <ha-icon icon="mdi:delete-outline" style="color: #A1887F; --mdc-icon-size: 18px;"></ha-icon>
+          </div>
+          <div style="text-align: left; margin-left: 8px;">
+            <div style="color: #A1887F; font-size: 12px; font-weight: bold;">UMIDO</div>
+            <div style="color: #AAAAAA; font-size: 10px;">Lunedì</div>
+          </div>
+        </div>
+        <div style="
+          flex: 1;
+          background-color: rgba(255, 255, 255, 0.04);
+          border-radius: 12px;
+          border: 1px solid rgba(0, 240, 255, 0.2);
+          padding: 8px 10px;
+          display: flex;
+          align-items: center;
+        ">
+          <div style="border: 1px solid #00F0FF; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <ha-icon icon="mdi:bottle-soda-outline" style="color: #00F0FF; --mdc-icon-size: 18px;"></ha-icon>
+          </div>
+          <div style="text-align: left; margin-left: 8px;">
+            <div style="color: #00F0FF; font-size: 12px; font-weight: bold;">PLASTICA</div>
+            <div style="color: #AAAAAA; font-size: 10px;">Giovedì</div>
+          </div>
+        </div>
+      </div>`;
+    ]]]
+  image: |
+    [[[
+      const s = (entity.state || '').toLowerCase();
+      let file = 'bin_neutro3.png';
+      if ((s.includes('plastica') || s.includes('plastica')) && (s.includes('umido') || s.includes('organico'))) {
+        file = 'bin_plastica_umido1.png';
+      } else if ((s.includes('secco') || s.includes('indifferenziato')) && (s.includes('umido') || s.includes('organico'))) {
+        file = 'bin_secco_umido1.png';
+      } else if (s.includes('carta')) {
+        file = 'bin_carta1.png';
+      } else if (s.includes('plastica')) {
+        file = 'bin_plastica1.png';
+      } else if (s.includes('vetro')) {
+        file = 'bin_vetro1.png';
+      } else if (s.includes('secco') || s.includes('indifferenziato')) {
+        file = 'bin_secco1.png';
+      } else if (s.includes('umido') || s.includes('organico')) {
+        file = 'bin_umido1.png';
+      }
+      return `<div style="width:100%; border-radius:14px; overflow:hidden; background:transparent; display: flex; justify-content: center;">
+        <img src="/local/${file}?v=3" style="width:100%; height:auto; max-height:200px; display:block; object-fit:contain;" />
+      </div>`;
+    ]]]
+  notifiche: |
+    [[[
+      return `<div style="display: flex; gap: 8px;">
+        <div style="
+          flex: 1;
+          background-color: rgba(46, 204, 113, 0.08);
+          border: 1px solid rgba(46, 204, 113, 0.2);
+          border-radius: 10px;
+          height: 38px;
+          padding: 2px 8px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        ">
+          <ha-icon icon="mdi:check" style="color: #2ecc71; width: 16px;"></ha-icon>
+          <span style="color: #FFFFFF; font-size: 10px; text-align: left;">Notifica Informativa</span>
+        </div>
+        <div style="
+          flex: 1;
+          background-color: rgba(46, 204, 113, 0.08);
+          border: 1px solid rgba(46, 204, 113, 0.2);
+          border-radius: 10px;
+          height: 38px;
+          padding: 2px 8px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        ">
+          <ha-icon icon="mdi:check" style="color: #2ecc71; width: 16px;"></ha-icon>
+          <span style="color: #FFFFFF; font-size: 10px; text-align: left;">Ritiro Confermato</span>
+        </div>
+      </div>`;
+    ]]]
+  status: |
+    [[[
+      return `<div style="margin-top: 4px;">
+        <div style="display: flex; justify-content: space-between; color: #FFFFFF; font-size: 11px; margin-bottom: 4px;">
+          <span>Automazione Attiva</span>
+          <span style="color: #00F0FF;">100%</span>
+        </div>
+        <div style="width: 100%; background-color: rgba(255,255,255,0.1); height: 3px; border-radius: 2px;">
+          <div style="width: 100%; background-color: #00F0FF; height: 100%; border-radius: 2px; box-shadow: 0 0 6px #00F0FF;"></div>
+        </div>
+      </div>`;
+    ]]]
