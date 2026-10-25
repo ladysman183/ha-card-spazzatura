@@ -1,0 +1,48 @@
+{% set domani = (now() + timedelta(days=1)) %}
+{% set giorno_settimana = domani.strftime('%A') %}
+
+{# Calcolo delle settimane alterne con data di riferimento #}
+{% set data_rif = '2026-07-06' | as_datetime | as_local %}
+{% set giorni_passati = (domani - data_rif).days %}
+{% set settimana_alterna = (giorni_passati / 7) | int % 2 == 0 %}
+
+{# Calcolo per il Vetro (es. ogni 4 settimane / 28 giorni) #}
+{% set rif_vetro = '2026-06-30' | as_datetime | as_local %}
+{% set giorni_vetro = (domani - rif_vetro).days %}
+{% set turno_vetro = (giorni_vetro / 7) | int % 4 == 0 %}
+
+{% if giorno_settimana == 'Monday' %}
+  {# Lunedì: Umido sempre + Secco a settimane alterne #}
+  {% if not settimana_alterna %}
+    Umido e Secco
+  {% else %}
+    Umido
+  {% endif %}
+
+{% elif giorno_settimana == 'Tuesday' %}
+  {# Martedì: Vetro ogni 4 settimane #}
+  {% if turno_vetro %}
+    Vetro
+  {% else %}
+    Nessuno
+  {% endif %}
+
+{% elif giorno_settimana == 'Wednesday' %}
+  {# Mercoledì: Carta a settimane alterne #}
+  {% if settimana_alterna %}
+    Carta
+  {% else %}
+    Nessuno
+  {% endif %}
+
+{% elif giorno_settimana == 'Thursday' %}
+  {# Giovedì: Umido sempre + Plastica a settimane alterne #}
+  {% if not settimana_alterna %}
+    Umido e Plastica
+  {% else %}
+    Umido
+  {% endif %}
+
+{% else %}
+  Nessuno
+{% endif %}
