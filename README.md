@@ -1,3 +1,7 @@
+![Anteprima Immondizia](neutro.jpg)
+
+
+
 # 🗑️ Dashboard Waste Collection Card per Home Assistant
 
 Una card moderna per la gestione della raccolta differenziata in **Home Assistant**, completa di icone dinamiche, immagini dei bidoni per ritiri singoli/doppi e notifica serale automatica.
