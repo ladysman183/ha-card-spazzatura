@@ -48,3 +48,6 @@ Scarica i file `.png` presenti in questo repository e inseriscili nella cartella
 2. Clicca su **Aggiungi Scheda** e seleziona **Manuale** (YAML).
 3. Incolla il codice presente nel file:
    👉 **[Apri card.yaml](./card.yaml)**
+
+   ---
+💬 **Supporto e Domande:** Hai domande o problemi con la configurazione? Apri una [Issue](https://github.com/ladysman183/ha-card-spazzatura/issues) oppure cercami su [TikTok](https://www.tiktok.com/@ladysman183)!
