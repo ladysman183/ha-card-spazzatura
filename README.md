@@ -6,6 +6,8 @@
 
 Una card moderna per la gestione della raccolta differenziata in **Home Assistant**, completa di icone dinamiche, immagini dei bidoni per ritiri singoli/doppi e notifica serale automatica.
 
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/ladysman183)
+
 ---
 
 ## 📋 Guida all'Installazione
